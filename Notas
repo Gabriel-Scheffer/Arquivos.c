@@ -1,0 +1,53 @@
+/*Faça um programa que leia (do teclado) um cadastro de 10 alunos,
+ indicando o nome, nota1, nota2. Calcule a média aritmética simples dos 10 alunos
+ e depois escreva em um arquivo texto os dados de cada aluno: nome, nota1, nota2 e média.
+Lembre-se de que as notas e média deverão ser apresentadas como valores que possuem até 2 casas após a vírgula.
+*/
+#include<stdio.h>
+struct aluno
+{
+    char nome[50];
+    float nota1;
+    float nota2;
+    float media;
+};
+
+main()
+{
+    struct aluno dados[3];
+    int i;
+    for(i=0;i<3;i++)
+    {
+        printf("Digite o nome do aluno:");
+        scanf("%s", &dados[i].nome);
+        printf("Digite a primeira nota do %s =", dados[i].nome);
+        scanf("%f", &dados[i].nota1);
+        while(dados[i].nota1<0 || dados[i].nota1>10)
+        {
+            printf("Nota invalida, digite novamente:");
+            scanf("%f", &dados[i].nota1);
+        }
+        printf("Digite a segunda nota do %s =", dados[i].nome);
+        scanf("%f", &dados[i].nota2);
+        while(dados[i].nota2<0 || dados[i].nota2>10)
+        {
+            printf("Nota invalida, digite novamente:");
+            scanf("%f", &dados[i].nota1);
+        }
+    }
+    FILE *pont_arq;
+    pont_arq = fopen("Notas.txt", "a");
+    if(pont_arq==NULL)
+    {
+        printf("arquivo nao pode ser aberto/criado");
+    }
+    else
+    {
+        printf("Arquivo criado com sucesso.");
+        for(i=0;i<3;i++)
+        {
+            fprintf(pont_arq,"Aluno =%s | nota 1 = %.2f | nota 2 = %.2f | media = %.2f\n", dados[i].nome, dados[i].nota1, dados[i].nota2, (dados[i].nota1+dados[i].nota2)/2);
+        }
+    }
+    fclose(pont_arq);
+}
